@@ -81,7 +81,7 @@ brews:
   - name: goradar
     repository:
       owner: alexraskin
-      name: homebrew-tap
+      name: goradar
     commit_author:
       name: GitHub Actions
       email: bot@alexraskin.com
