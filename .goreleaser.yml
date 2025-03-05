@@ -1,0 +1,90 @@
+before:
+  hooks:
+    - go mod tidy
+
+builds:
+  - env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - darwin
+      - windows
+    goarch:
+      - amd64
+      - arm64
+    ignore:
+      - goos: windows
+        goarch: arm64
+    ldflags:
+      - -s -w
+      - -X main.version={{.Version}}
+      - -X main.commit={{.Commit}}
+      - -X main.date={{.Date}}
+    main: ./main.go
+
+archives:
+  - format: tar.gz
+    name_template: >-
+      {{ .ProjectName }}_
+      {{- title .Os }}_
+      {{- if eq .Arch "amd64" }}x86_64
+      {{- else if eq .Arch "386" }}i386
+      {{- else }}{{ .Arch }}{{ end }}
+      {{- if .Arm }}v{{ .Arm }}{{ end }}
+    format_overrides:
+      - goos: windows
+        format: zip
+
+checksum:
+  name_template: 'checksums.txt'
+  algorithm: sha256
+
+snapshot:
+  name_template: "{{ incpatch .Version }}-next"
+
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - '^docs:'
+      - '^test:'
+      - '^ci:'
+      - '^chore:'
+      - Merge pull request
+      - Merge branch
+      - '^v\d+\.\d+\.\d+'
+
+release:
+  mode: replace
+  header: |
+    ## GoRadar {{ .Tag }}
+
+    GoRadar is a command-line interface for tracking aircraft using the adsb.lol API.
+    It provides various commands to search and filter aircraft data.
+
+    ### Features
+    - Search aircraft by various criteria:
+      - Registration number
+      - ICAO hex code
+      - Aircraft type
+      - Squawk code
+      - Military aircraft
+      - PIA (Privacy ICAO Address) aircraft
+      - LADD (Limiting Aircraft Data Displayed) aircraft
+    - Pagination support for large result sets
+    - Colored output for better readability
+
+  footer: |
+    **Full Changelog**: https://github.com/alexraskin/goradar/compare/{{ .PreviousTag }}...{{ .Tag }}
+
+brews:
+  - name: goradar
+    repository:
+      owner: alexraskin
+      name: homebrew-tap
+    commit_author:
+      name: GitHub Actions
+      email: bot@alexraskin.com
+    directory: Formula
+    homepage: "https://github.com/alexraskin/goradar"
+    description: "A CLI tool for tracking aircraft using the adsb.lol API" 
