@@ -19,7 +19,19 @@ func DisplayAircraft(ac *api.APIResponse, opts *api.PaginationOptions) {
 		return
 	}
 
-	fmt.Printf("Found %d aircraft", ac.Total)
+	var filteredAc []api.Aircraft
+	for _, aircraft := range ac.Ac {
+		if aircraft.Flight != "" {
+			filteredAc = append(filteredAc, aircraft)
+		}
+	}
+
+	if len(filteredAc) == 0 {
+		fmt.Println("No aircraft with flight numbers found")
+		return
+	}
+
+	fmt.Printf("Found %d aircraft with flight numbers", len(filteredAc))
 	if opts != nil {
 		if opts.Limit > 0 {
 			fmt.Printf(" (showing %d per page", opts.Limit)
@@ -33,11 +45,11 @@ func DisplayAircraft(ac *api.APIResponse, opts *api.PaginationOptions) {
 	fmt.Println()
 
 	start := 0
-	end := len(ac.Ac)
+	end := len(filteredAc)
 	if opts != nil {
 		if opts.Limit > 0 {
 			start = opts.Offset
-			end = min(start+opts.Limit, len(ac.Ac))
+			end = min(start+opts.Limit, len(filteredAc))
 		}
 	}
 
@@ -55,7 +67,12 @@ func DisplayAircraft(ac *api.APIResponse, opts *api.PaginationOptions) {
 	table.SetTablePadding(" ")
 	table.SetNoWhiteSpace(false)
 
-	for _, aircraft := range ac.Ac[start:end] {
+	for _, aircraft := range filteredAc[start:end] {
+		fr24URL := ""
+		if aircraft.Flight != "" {
+			fr24URL = getFlightRadar24URL(aircraft.Flight)
+		}
+
 		row := []string{
 			aircraft.Flight,
 			aircraft.Registration,
@@ -65,7 +82,7 @@ func DisplayAircraft(ac *api.APIResponse, opts *api.PaginationOptions) {
 			formatPosition(aircraft),
 			formatAltitude(aircraft),
 			formatSpeed(aircraft),
-			getFlightRadar24URL(aircraft.Flight),
+			fr24URL,
 		}
 		table.Append(row)
 	}
