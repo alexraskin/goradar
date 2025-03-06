@@ -5,20 +5,20 @@
 class Goradar < Formula
   desc "A CLI tool for tracking aircraft using the adsb.lol API"
   homepage "https://github.com/alexraskin/goradar"
-  version "1.0.1"
+  version "1.0.2"
 
   on_macos do
     if Hardware::CPU.intel?
-      url "https://github.com/alexraskin/goradar/releases/download/v1.0.1/goradar_Darwin_x86_64.tar.gz"
-      sha256 "0fe01373884527bf46054b9693e0da8638e0c17ec7cb9c393441c2a4e46e20d7"
+      url "https://github.com/alexraskin/goradar/releases/download/v1.0.2/goradar_Darwin_x86_64.tar.gz"
+      sha256 "ff4467445482d76b78a14d1f248852f7097aa7e121c8d2b2f1bf7830f6461cce"
 
       def install
         bin.install "goradar"
       end
     end
     if Hardware::CPU.arm?
-      url "https://github.com/alexraskin/goradar/releases/download/v1.0.1/goradar_Darwin_arm64.tar.gz"
-      sha256 "3720a3d78a9fcc3df106f600accdcfa6a484bfcd618203448e857c1c0ab74a92"
+      url "https://github.com/alexraskin/goradar/releases/download/v1.0.2/goradar_Darwin_arm64.tar.gz"
+      sha256 "21d2359640d0a220d0d0c1db985f6fe5766aeedbf5cb1cc27c1b82c4df5e8c8b"
 
       def install
         bin.install "goradar"
@@ -29,8 +29,8 @@ class Goradar < Formula
   on_linux do
     if Hardware::CPU.intel?
       if Hardware::CPU.is_64_bit?
-        url "https://github.com/alexraskin/goradar/releases/download/v1.0.1/goradar_Linux_x86_64.tar.gz"
-        sha256 "4aecc7d77829b37cfce51f2b274866ab71d0c59a719e392899432844656aa61a"
+        url "https://github.com/alexraskin/goradar/releases/download/v1.0.2/goradar_Linux_x86_64.tar.gz"
+        sha256 "706eecfade7c82e116b5a14d6676c46b7dac96e65cee5da5bfe11e444d1e33e4"
 
         def install
           bin.install "goradar"
@@ -39,8 +39,8 @@ class Goradar < Formula
     end
     if Hardware::CPU.arm?
       if Hardware::CPU.is_64_bit?
-        url "https://github.com/alexraskin/goradar/releases/download/v1.0.1/goradar_Linux_arm64.tar.gz"
-        sha256 "3ef4b6a0ae1b571c33b9b0f9f0ad06f9d08839f555e0d1cca680c80aa77b62d6"
+        url "https://github.com/alexraskin/goradar/releases/download/v1.0.2/goradar_Linux_arm64.tar.gz"
+        sha256 "6506b629510ba4cf43430d51011840d7546b53bb984c5d84c7a180a23df0ec4a"
 
         def install
           bin.install "goradar"
