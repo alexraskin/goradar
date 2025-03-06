@@ -4,7 +4,7 @@ A command-line interface for tracking aircraft using the adsb.lol API.
 
 ## Features
 
-- Search aircraft by various criteria:
+- Search aircraft:
   - Registration number
   - ICAO hex code
   - Aircraft type
@@ -13,12 +13,11 @@ A command-line interface for tracking aircraft using the adsb.lol API.
   - PIA (Privacy ICAO Address) aircraft
   - LADD (Limiting Aircraft Data Displayed) aircraft
 - Pagination support for large result sets
-- Colored output for better readability
 - FlightRadar24 integration
 
 ## Installation
 
-### macOS (via Homebrew)
+### mac
 
 ```bash
 brew tap alexraskin/homebrew-tap
